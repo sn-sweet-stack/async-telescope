@@ -1,0 +1,28 @@
+{
+  "name": "sweetstackdigital/async-telescope",
+  "description": "Asynchronous database storage driver for Laravel Telescope",
+  "keywords": [
+    "laravel",
+    "monitoring",
+    "telescope",
+    "async",
+    "asynchronous"
+  ],
+  "require": {
+    "laravel/framework": "^8.0",
+    "laravel/telescope": "^4.2"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergio Neskodi",
+      "email": "serhiy@sweetstack.tech"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "\\Sweetstack\\AsyncTelescope": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
