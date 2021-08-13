@@ -5,6 +5,7 @@ namespace Sweetstack\AsyncTelescope\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Collection;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 abstract class BaseStorageJob
 {
@@ -19,7 +20,7 @@ abstract class BaseStorageJob
 
     protected function getDatabaseStorageDriver(): EntriesRepository
     {
-        return app(EntriesRepository::class);
+        return app(DatabaseEntriesRepository::class);
     }
 
     abstract public function handle();
