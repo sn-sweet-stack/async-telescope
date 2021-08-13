@@ -10,7 +10,7 @@
   ],
   "require": {
     "laravel/framework": "^8.0",
-    "laravel/telescope": "^4.2"
+    "laravel/telescope": "^4.0"
   },
   "license": "MIT",
   "authors": [
