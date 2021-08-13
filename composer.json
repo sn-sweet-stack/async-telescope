@@ -1,5 +1,5 @@
 {
-  "name": "sweetstackdigital/async-telescope",
+  "name": "sweetstack/async-telescope",
   "description": "Asynchronous database storage driver for Laravel Telescope",
   "keywords": [
     "laravel",
@@ -21,7 +21,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "\\Sweetstack\\AsyncTelescope": "src/"
+      "Sweetstack\\AsyncTelescope\\": "src/"
     }
   },
   "minimum-stability": "dev"
