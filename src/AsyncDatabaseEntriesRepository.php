@@ -2,15 +2,17 @@
 
 namespace Sweetstack\AsyncTelescope;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Collection;
-use Laravel\Telescope\Contracts\ClearableRepository;
-use Laravel\Telescope\Contracts\EntriesRepository;
-use Laravel\Telescope\Contracts\PrunableRepository;
-use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
-use Sweetstack\AsyncTelescope\Jobs\StoreEntriesJob;
+use Laravel\Telescope\Contracts\ClearableRepository;
 use Sweetstack\AsyncTelescope\Jobs\UpdateEntriesJob;
+use Laravel\Telescope\Contracts\PrunableRepository;
+use Sweetstack\AsyncTelescope\Jobs\StoreEntriesJob;
+use Laravel\Telescope\Contracts\EntriesRepository;
+use Illuminate\Contracts\Foundation\Application;
+use Laravel\Telescope\IncomingEntry;
+use Illuminate\Support\Collection;
+use Laravel\Telescope\EntryUpdate;
+use Illuminate\Support\Str;
 
 class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
 {
@@ -22,6 +24,10 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
      */
     public function store(Collection $entries): void
     {
+        if ($this->shouldNotDispatch($entries)) {
+            return;
+        }
+
         $this->dispatch(new StoreEntriesJob($entries));
     }
 
@@ -33,7 +39,20 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
      */
     public function update(Collection $updates): void
     {
+        if ($this->shouldNotDispatch($updates)) {
+            return;
+        }
+
         $this->dispatch(new UpdateEntriesJob($updates));
+    }
+
+    public function shouldNotDispatch(Collection $entries): bool
+    {
+        return $entries->isEmpty() || $entries->contains(
+            function (IncomingEntry $entry) {
+                return Str::contains(json_encode($entry->content), 'AsyncTelescope');
+            }
+        );
     }
 
     /**
