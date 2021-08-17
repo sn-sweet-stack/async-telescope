@@ -62,6 +62,10 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
      */
     public static function register(Application $app): void
     {
+        if (!config('telescope.storage.async', false)) {
+            return;
+        }
+
         static::registerSelfAsEntriesRepository($app);
 
         static::configureUnderlyingDatabaseStorage($app);
@@ -125,7 +129,7 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
     {
         $dispatchedInstance = dispatch($job);
 
-        if ($conn = config('telescope.storage.async.queue_connection')) {
+        if ($conn = config('telescope.storage.async.connection')) {
             $dispatchedInstance->onConnection($conn);
         }
 
