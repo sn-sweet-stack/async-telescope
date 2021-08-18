@@ -1,4 +1,6 @@
-# Asynchronous storage driver for Laravel Telescope
+# WORK IN PROGRESS - DO NOT USE IN PRODUCTION!
+
+### Asynchronous storage driver for Laravel Telescope
 
 If you use Telescope in production and you are concerned with the amount of work 
 Telescope does to store its entries during the request, you may use this driver 
