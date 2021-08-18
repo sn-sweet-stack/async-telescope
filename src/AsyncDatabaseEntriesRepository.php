@@ -62,7 +62,7 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
      */
     public static function register(Application $app): void
     {
-        if (!config('telescope.storage.async', false)) {
+        if (!config('telescope.async', false)) {
             return;
         }
 
