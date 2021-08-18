@@ -49,8 +49,9 @@ class AsyncDatabaseEntriesRepository extends DatabaseEntriesRepository
     public function shouldNotDispatch(Collection $entries): bool
     {
         return $entries->isEmpty() || $entries->contains(
-            function (IncomingEntry $entry) {
-                return Str::contains(json_encode($entry->content), 'AsyncTelescope');
+            function ($entry) {
+                return $entry instanceof IncomingEntry &&
+                       Str::contains(json_encode($entry->content), 'AsyncTelescope');
             }
         );
     }
